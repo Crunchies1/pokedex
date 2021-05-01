@@ -1,24 +1,22 @@
-import logo from './logo.svg';
+import React, { useState, Fragment } from 'react'
 import './App.css';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 
 function App() {
+  const [useSidebar, setUseSidebar] = useState(false) 
+
+  const extendSidebar = () => {
+    useSidebar ? setUseSidebar(false) : setUseSidebar(true)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <Sidebar useSidebar={useSidebar}/>
+      <Header useSidebar={useSidebar} extendSidebar={extendSidebar}/>
+      <div>
+      </div>
+    </Fragment>
   );
 }
 
