@@ -1,22 +1,19 @@
-import React, { useState, Fragment } from 'react'
+import React, { useReducer } from 'react'
 import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import Routing from './pages/Routing';
+import { SidebarContext, initialState, reducer, init } from "./utils/store"
 
 function App() {
-  const [useSidebar, setUseSidebar] = useState(false) 
-
-  const extendSidebar = () => {
-    useSidebar ? setUseSidebar(false) : setUseSidebar(true)
-  }
+  const [status, dispatch] = useReducer(reducer, initialState, init);
 
   return (
-    <Fragment>
-      <Sidebar useSidebar={useSidebar}/>
-      <Header useSidebar={useSidebar} extendSidebar={extendSidebar}/>
-      <div>
-      </div>
-    </Fragment>
+    <SidebarContext.Provider value={{ sidebarStatus: status, sidebarDispatch: dispatch }}>
+      <Sidebar />
+      <Header />
+      <Routing />
+    </SidebarContext.Provider>
   );
 }
 
