@@ -3,17 +3,24 @@ import './App.css';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Routing from './pages/Routing';
-import { SidebarContext, initialState, reducer, init } from "./utils/store"
+import * as store from "./utils/store"
 
 function App() {
-  const [status, dispatch] = useReducer(reducer, initialState, init);
+  const [status, dispatch] = useReducer(store.reducer, store.initialState, store.init);
+  const [darkStatus, darkDispatch] = useReducer(store.darkReducer, store.darkInitialState, store.darkInit);
 
   return (
-    <SidebarContext.Provider value={{ sidebarStatus: status, sidebarDispatch: dispatch }}>
-      <Sidebar />
-      <Header />
-      <Routing />
-    </SidebarContext.Provider>
+    <store.DarkContext.Provider value={{ darkStatus: darkStatus, darkDispatch: darkDispatch }}>
+      <store.SidebarContext.Provider value={{ sidebarStatus: status, sidebarDispatch: dispatch }}>
+        <store.FilterProvider>
+          <html class={darkStatus.status}>
+            <Sidebar />
+            <Header />
+            <Routing />
+          </html>
+        </store.FilterProvider>
+      </store.SidebarContext.Provider>
+    </store.DarkContext.Provider>
   );
 }
 

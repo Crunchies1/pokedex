@@ -21,12 +21,12 @@ const Pokecard = (props) => {
                 <img src={props.sprites.front_default} alt={props.name} width="120" height="120" />
             </div>
             <div class="flex justify-center w-full">
-                <p class="text-xs font-thin text-gray-500">
+                <p class="text-xs font-thin text-gray-500 dark:text-gray-200">
                     {"#" + props.id}
                 </p>
             </div>
             <div class="flex justify-center w-full">
-                <p class="capitalize pb-1.5 font-medium">
+                <p class="capitalize pb-1.5 font-medium dark:text-gray-100">
                     {props.name}
                 </p>
             </div>

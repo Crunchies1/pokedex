@@ -3,6 +3,7 @@ import NavItem from "./NavItem";
 import Button from "./Button";
 import Typo from "./Typo";
 import { MdDehaze } from "react-icons/md";
+import { CgComponents } from "react-icons/cg";
 import { SidebarContext } from '../utils/store';
 
 const Header = () => {
@@ -10,38 +11,26 @@ const Header = () => {
     const classes = (sidebar.sidebarStatus.status === 'retracted') ? "" : " pl-60" 
 
     return(
-        <div class={"transition-all duration-500 ease-in-out flex w-auto h-12 bg-white dark:bg-gray-700 content-center ml-auto border-b border-gray-200" + classes}>
-            <div class="flex items-center w-12">
-                <Button onClick={() => sidebar.sidebarDispatch('swap')}>
+        <div class={"transition-all duration-500 ease-in-out flex w-auto h-12 bg-white dark:bg-gray-700 content-center ml-auto border-b border-gray-200 dark:border-gray-400" + classes}>
+            <div class="flex items-center">
+                <Button styleName={`flex flex-row items-center`} onClick={() => sidebar.sidebarDispatch('swap')}>
                     <MdDehaze />
+                    <Typo>
+                        Options
+                    </Typo>
                 </Button>
             </div>
-            <Typo>
-                CPDL
-            </Typo>
             <div class="w-1/12" />
             <ul class="flex items-center">
                 <li>
-                    <NavItem href="/">
-                        Pokedex
-                    </NavItem>
-                </li>
-                <li>
-                    <NavItem>
-                        Draft League
-                    </NavItem>
-                </li>
-                <li>
-                    <NavItem href="/profile">
-                        Profile
+                    <NavItem styleName={"flex flex-row items-center"} href="/">
+                        <CgComponents />
+                        <Typo class={"pl-2"}>
+                            Pokedex
+                        </Typo>
                     </NavItem>
                 </li>
             </ul>
-            <div class="ml-auto my-auto pr-4">
-                <Button>
-                    Log out
-                </Button>
-            </div>
         </div>
     )
 }
