@@ -11,8 +11,8 @@ const Header = () => {
     const classes = (sidebar.sidebarStatus.status === 'retracted') ? "" : " pl-60" 
 
     return(
-        <div class={"transition-all duration-500 ease-in-out flex w-auto h-12 bg-white dark:bg-gray-700 content-center ml-auto border-b border-gray-200 dark:border-gray-400" + classes}>
-            <div class="flex items-center">
+        <div className={"transition-all duration-500 ease-in-out flex w-auto h-12 bg-white dark:bg-gray-700 content-center ml-auto border-b border-gray-200 dark:border-gray-400" + classes}>
+            <div className="flex items-center">
                 <Button styleName={`flex flex-row items-center`} onClick={() => sidebar.sidebarDispatch('swap')}>
                     <MdDehaze />
                     <Typo>
@@ -20,12 +20,12 @@ const Header = () => {
                     </Typo>
                 </Button>
             </div>
-            <div class="w-1/12" />
-            <ul class="flex items-center">
+            <div className="w-1/12" />
+            <ul className="flex items-center">
                 <li>
                     <NavItem styleName={"flex flex-row items-center"} href="/">
                         <CgComponents />
-                        <Typo class={"pl-2"}>
+                        <Typo className={"pl-2"}>
                             Pokedex
                         </Typo>
                     </NavItem>

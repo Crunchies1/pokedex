@@ -8,7 +8,7 @@ const TypeCard = (props) => {
     }, [props.children])
 
     return(
-        <p class={`font-extralight font-sans capitalize text-center pt-0.5
+        <p className={`font-extralight font-sans capitalize text-center pt-0.5
         text-sm rounded-lg text-gray-100 select-none w-14 h-6 bg-` + typeColor}>
             {props.children}
         </p>

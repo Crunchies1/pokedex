@@ -1,51 +1,54 @@
-import { useRef, useEffect, useReducer } from "react"
+import { useRef, useEffect, useState } from "react"
 import axios from 'axios'
 
 // https://pokeapi.co/api/v2/pokemon/{id or name}/
+const POKEMON_TOTAL = 151
+const PAGE_TOTAL = 40
 
-const fetchPokedexEntry = async (id) =>
-    (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)).data
-
-const useFetch = (url) => {
+const usePokemonFetch = (page, filters) => {
     const cache = useRef({});
-    const initialState = {
-        status: 'idle',
-        error: null,
-        data: [],
-    };
-    
-    const [state, dispatch] = useReducer((state, action) => {
-        switch (action.type) {
-            case 'FETCHING':
-                return { ...initialState, status: 'fetching' };
-            case 'FETCHED':
-                return { ...initialState, status: 'fetched', data: action.payload };
-            case 'FETCH_ERROR':
-                return { ...initialState, status: 'error', error: action.payload };
-            default:
-                return state;
-        }
-    }, initialState);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+    const [pokemons, setPokemons] = useState([]);
+    const [hasMore, setHasMore] = useState(false);
+
 
     useEffect(() => {
         let cancelRequest = false;
-        if (!url) return;
-    
+
         const fetchData = async () => {
-            dispatch({ type: 'FETCHING' });
-            if (cache.current[url]) {
-                const data = cache.current[url];
-                dispatch({ type: 'FETCHED', payload: data });
-            } else {
+            setIsLoading(true)
+            setError("")
+
+            if (cache.current[page] && filters.length === 0) {
+                setIsLoading(false)
+                return;
+            } else { 
                 try {
-                    const response = await fetch(url);
-                    const data = await response.json();
-                    cache.current[url] = data;
-                    if (cancelRequest) return;
-                    dispatch({ type: 'FETCHED', payload: data });
+                    let fetchedPokemon = []
+                    // offset = 1, 41, 81, 121 
+                    // pageEnd = 40, 80, 120, 151
+                    
+                    let offset = 1 + PAGE_TOTAL * (page - 1)
+                    let pageEnd = Math.min(PAGE_TOTAL * page, POKEMON_TOTAL) 
+
+                    if (filters.length !== 0) {
+                        offset += PAGE_TOTAL
+                        pageEnd = POKEMON_TOTAL
+                    }
+
+                    for (var id = offset; id <= pageEnd; id++) {
+                        let data = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)).data
+                        fetchedPokemon.push(data)
+                    }
+                    cache.current[page] = true;
+                    setHasMore(pageEnd < POKEMON_TOTAL)
+                    setPokemons(prev => [...prev, ...fetchedPokemon])
+                    setIsLoading(false)
                 } catch (error) {
                     if (cancelRequest) return;
-                    dispatch({ type: 'FETCH_ERROR', payload: error.message });
+                    setError(error.message)
+                    setIsLoading(false)
                 }
             }
         };
@@ -55,12 +58,11 @@ const useFetch = (url) => {
         return function cleanup() {
             cancelRequest = true;
         };
-    }, [url]);
+    }, [page, filters]);
 
-    return { state };
+    return { isLoading, hasMore, error, pokemons };
 };
 
 export {
-    fetchPokedexEntry,
-    useFetch
+    usePokemonFetch
 }

@@ -44,8 +44,8 @@ const Filter = () => {
     ]
 
     return (
-        <div class={"border-2 border-gray-400 rounded-lg p-3 mt-8 shadow-md mx-8"}>
-            <div class={"flex flex-row flex-wrap items-center "}>
+        <div className={"border-2 border-gray-400 rounded-lg p-3 mt-8 shadow-md mx-8"}>
+            <div className={"flex flex-row flex-wrap items-center "}>
                 <Button styleName={"flex flex-row items-center"} onClick={() => setIsOpen(!isOpen)}>
                     <MdSearch />
                 </Button>
@@ -54,11 +54,11 @@ const Filter = () => {
                         Click the Search Icon to filter by type!
                     </Typo>
                 )}
-                <div class={"flex flex-row flex-wrap items-center "}>
+                <div className={"flex flex-row flex-wrap items-center "}>
                     {filters.map((type) => {
                         return (
                             <button key={type} 
-                            class={`font-extralight text-gray-100 dark:text-gray-100 font-sans capitalize text-xl 
+                            className={`font-extralight text-gray-100 dark:text-gray-100 font-sans capitalize text-xl 
                             cursor-pointer rounded-md px-4 m-2 bg-` + type} 
                             onClick={() => removeFilter(type)}>
                                 {type}
@@ -71,11 +71,11 @@ const Filter = () => {
                 </Button>
             </div>
             {isOpen && (
-                <div class={"flex flex-row flex-wrap items-center pt-2"}>
+                <div className={"flex flex-row flex-wrap items-center pt-2"}>
                     {types.map((type) => {
                         return (
                             <button key={type} 
-                                class={`shadow-sm font-extralight text-gray-800 dark:text-gray-100 font-sans capitalize text-xl 
+                                className={`shadow-sm font-extralight text-gray-800 dark:text-gray-100 font-sans capitalize text-xl 
                                 cursor-pointer rounded-md px-4 m-2 bg-` + type +`-bg border-2 border-` + type} 
                                 onClick={() => addFilter(type)}>
                                 {type}

@@ -13,11 +13,11 @@ function App() {
     <store.DarkContext.Provider value={{ darkStatus: darkStatus, darkDispatch: darkDispatch }}>
       <store.SidebarContext.Provider value={{ sidebarStatus: status, sidebarDispatch: dispatch }}>
         <store.FilterProvider>
-          <html class={darkStatus.status}>
+          <main className={darkStatus.status}>
             <Sidebar />
             <Header />
             <Routing />
-          </html>
+          </main>
         </store.FilterProvider>
       </store.SidebarContext.Provider>
     </store.DarkContext.Provider>
